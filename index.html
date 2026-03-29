@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Happy Birthday Mahitha 🎂</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300&family=DM+Sans:wght@300;400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<canvas id="particles"></canvas>
+<div id="cursor"></div>
+
+<audio id="bgMusic" loop>
+  <source src="golden-hour.mpeg" type="audio/mpeg">
+</audio>
+
+<!-- LOCK SCREEN -->
+<div id="lockScreen">
+  <div class="lock-card">
+    <span class="lock-icon">🎂</span>
+    <div class="lock-title">A Gift Just for You</div>
+    <div class="lock-sub">Enter the secret word to unlock your surprise...</div>
+    <input class="lock-input" id="pwInput" type="password" placeholder="✦  ·  ·  ·  ·  ✦" autocomplete="off" maxlength="20">
+    <button class="lock-btn" id="unlockBtn">Open ✨</button>
+    <div class="lock-error" id="lockError">That's not quite right... try again 💭</div>
+  </div>
+</div>
+
+<!-- MAIN SITE -->
+<div id="mainSite">
+
+  <button id="audioBtn" title="Toggle music">🎵</button>
+  <button id="surpriseBtn">🌟 Surprise</button>
+
+  <!-- HERO -->
+  <section id="hero">
+    <div class="hero-orb orb1"></div>
+    <div class="hero-orb orb2"></div>
+    <div class="hero-badge">✦ March 30, 2007 ✦</div>
+    <h1 class="hero-title">Happy Birthday<br>Mahitha ❤️</h1>
+    <p class="hero-type" id="typingEl"><span id="typingText"></span><span class="cursor-blink"></span></p>
+  </section>
+
+  <!-- LETTER SECTION -->
+  <section id="letters">
+    <div class="section-wrap">
+      <p class="section-label reveal">The Letters of Your Name</p>
+      <h2 class="section-title reveal">M · A · H · I · T · H · A</h2>
+      <div class="letters-grid" id="lettersGrid"></div>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section id="about">
+    <div class="section-wrap">
+      <p class="section-label reveal">A Few Words About You</p>
+      <h2 class="section-title reveal">You are...</h2>
+      <div class="about-grid">
+        <div class="about-card reveal">
+          <span class="about-emoji">🌸</span>
+          <div class="about-word">Graceful</div>
+          <div class="about-desc">The way you carry yourself — with quiet elegance and a warmth that puts everyone at ease.</div>
+        </div>
+        <div class="about-card reveal">
+          <span class="about-emoji">✨</span>
+          <div class="about-word">Radiant</div>
+          <div class="about-desc">Your light doesn't need to announce itself. It simply glows — naturally, genuinely.</div>
+        </div>
+        <div class="about-card reveal">
+          <span class="about-emoji">🌙</span>
+          <div class="about-word">Calming</div>
+          <div class="about-desc">There's something about your presence that makes the world feel quieter, softer, kinder.</div>
+        </div>
+        <div class="about-card reveal">
+          <span class="about-emoji">💫</span>
+          <div class="about-word">One of a kind</div>
+          <div class="about-desc">There's nobody quite like Mahitha. And that's not flattery — it's just the truth.</div>
+        </div>
+        <div class="about-card full reveal">
+          <span class="about-emoji">♈</span>
+          <div class="about-word">An Aries Soul</div>
+          <div class="about-desc">Born under the first sign of the zodiac — bold at heart, fiercely loyal, and radiating an energy that's impossible to ignore. The fire in you is quiet but real.</div>
+          <span class="aries-tag">♈ Aries · March 30 · The Ram</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TIMER -->
+  <section id="timer">
+    <div class="section-wrap">
+      <p class="section-label reveal">She's Been Our Light For</p>
+      <h2 class="section-title reveal">Time Since Birth</h2>
+      <div class="timer-box reveal">
+        <div class="timer-label">Every second since March 30, 2007 has been a gift ✨</div>
+        <div class="timer-grid">
+          <div class="timer-unit">
+            <div class="timer-num" id="tYears">00</div>
+            <div class="timer-unit-label">Years</div>
+          </div>
+          <div class="timer-sep">·</div>
+          <div class="timer-unit">
+            <div class="timer-num" id="tDays">000</div>
+            <div class="timer-unit-label">Days</div>
+          </div>
+          <div class="timer-sep">·</div>
+          <div class="timer-unit">
+            <div class="timer-num" id="tHours">00</div>
+            <div class="timer-unit-label">Hours</div>
+          </div>
+          <div class="timer-sep">·</div>
+          <div class="timer-unit">
+            <div class="timer-num" id="tMins">00</div>
+            <div class="timer-unit-label">Mins</div>
+          </div>
+          <div class="timer-sep">·</div>
+          <div class="timer-unit">
+            <div class="timer-num" id="tSecs">00</div>
+            <div class="timer-unit-label">Secs</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FINAL MESSAGE -->
+  <section id="final">
+    <div class="final-wrap reveal">
+      <p class="section-label">A Note From the Heart</p>
+      <div class="final-divider"></div>
+      <p class="final-quote" id="finalQuote"></p>
+      <div class="final-divider"></div>
+      <p class="final-sig">— Made by ur bestfriend harry 💜</p>
+    </div>
+  </section>
+
+</div>
+
+<!-- SURPRISE MODAL -->
+<div id="surpriseModal">
+  <div class="modal-card">
+    <div style="font-size:3rem;margin-bottom:16px;">🌟</div>
+    <div class="modal-title">You Found It!</div>
+    <p class="modal-text">
+      The real surprise isn't on this page, Mahitha.<br><br>
+      It's in every moment we've shared, every laugh that ran a little too long,
+      every inside joke that makes no sense to anyone but us.<br><br>
+      You're not just a year older today —<br>you're a year more <em>you</em>.<br><br>
+      And that's the most beautiful thing in the world. 💜
+    </p>
+    <button class="modal-close" id="modalClose">Close ✨</button>
+  </div>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
