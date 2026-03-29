@@ -243,9 +243,126 @@ function initSurprise(){
   const sBtn = document.getElementById('surpriseBtn');
   const modal = document.getElementById('surpriseModal');
   const close = document.getElementById('modalClose');
-  
+
   setTimeout(()=>{ sBtn.classList.add('show'); }, 10000);
-  sBtn.addEventListener('click',()=>modal.classList.add('show'));
+
+  sBtn.addEventListener('click',()=>{
+    blastSurprise();
+    setTimeout(()=>modal.classList.add('show'), 600);
+  });
   close.addEventListener('click',()=>modal.classList.remove('show'));
   modal.addEventListener('click',e=>{ if(e.target===modal) modal.classList.remove('show'); });
+}
+
+function blastSurprise(){
+  screenFlash();
+  massiveConfetti();
+  fireworksBurst();
+  heartExplosion();
+  ringSurpriseBtn();
+}
+
+function screenFlash(){
+  const flash = document.createElement('div');
+  flash.style.cssText = `
+    position:fixed;inset:0;z-index:9000;pointer-events:none;
+    background:radial-gradient(ellipse at 50% 50%, rgba(236,72,153,0.55), rgba(123,47,255,0.4), transparent 70%);
+    animation:flashFade 0.8s ease forwards;
+  `;
+  if(!document.getElementById('flashStyle')){
+    const s = document.createElement('style');
+    s.id='flashStyle';
+    s.textContent=`
+      @keyframes flashFade{0%{opacity:0}20%{opacity:1}100%{opacity:0}}
+      @keyframes firework{0%{transform:translate(0,0) scale(1);opacity:1}100%{transform:translate(var(--tx),var(--ty)) scale(0);opacity:0}}
+      @keyframes bigHeart{0%{transform:translate(-50%,-50%) scale(0) rotate(-20deg);opacity:1}60%{opacity:1}100%{transform:translate(-50%,-50%) scale(3.5) rotate(10deg);opacity:0}}
+      @keyframes ringPulse{0%{transform:scale(1);box-shadow:0 0 30px rgba(236,72,153,0.4)}25%{transform:scale(1.35);box-shadow:0 0 60px rgba(255,215,0,0.9),0 0 100px rgba(236,72,153,0.7)}50%{transform:scale(0.95);box-shadow:0 0 30px rgba(123,47,255,0.6)}75%{transform:scale(1.2);box-shadow:0 0 50px rgba(255,215,0,0.7)}100%{transform:scale(1);box-shadow:0 0 30px rgba(236,72,153,0.4)}}
+    `;
+    document.head.appendChild(s);
+  }
+  document.body.appendChild(flash);
+  setTimeout(()=>flash.remove(), 900);
+}
+
+function massiveConfetti(){
+  const colors=['#ec4899','#a855f7','#ffd700','#fb7185','#f9a8d4','#fff','#c084fc','#ff80b5','#fde68a','#7b2fff'];
+  const shapes=['50%','2px','0'];
+  for(let wave=0;wave<3;wave++){
+    setTimeout(()=>{
+      for(let i=0;i<80;i++){
+        const el=document.createElement('div');
+        const size=6+Math.random()*10;
+        const shape=shapes[Math.floor(Math.random()*shapes.length)];
+        el.style.cssText=`
+          position:fixed;z-index:8000;pointer-events:none;
+          left:${10+Math.random()*80}vw;top:0;
+          width:${size}px;height:${size*(0.6+Math.random()*0.8)}px;
+          background:${colors[Math.floor(Math.random()*colors.length)]};
+          border-radius:${shape};
+          animation:confettiDrop ${1.5+Math.random()*2.5}s ${Math.random()*0.6}s linear forwards;
+          transform:rotate(${Math.random()*360}deg);
+        `;
+        document.body.appendChild(el);
+        setTimeout(()=>el.remove(),5000);
+      }
+    }, wave*200);
+  }
+}
+
+function fireworksBurst(){
+  const colors=['#ffd700','#ec4899','#a855f7','#fff','#fb7185','#ff80b5'];
+  const origins=[
+    {x:'20vw',y:'30vh'},{x:'50vw',y:'20vh'},{x:'80vw',y:'30vh'},
+    {x:'30vw',y:'55vh'},{x:'70vw',y:'50vh'},{x:'50vw',y:'40vh'},
+  ];
+  origins.forEach((o, oi)=>{
+    setTimeout(()=>{
+      for(let i=0;i<28;i++){
+        const el=document.createElement('div');
+        const angle=(i/28)*Math.PI*2;
+        const dist=80+Math.random()*120;
+        const tx=Math.cos(angle)*dist;
+        const ty=Math.sin(angle)*dist;
+        const color=colors[Math.floor(Math.random()*colors.length)];
+        const size=3+Math.random()*5;
+        el.style.cssText=`
+          position:fixed;z-index:7500;pointer-events:none;
+          left:${o.x};top:${o.y};
+          width:${size}px;height:${size}px;
+          border-radius:50%;
+          background:${color};
+          box-shadow:0 0 6px 2px ${color};
+          --tx:${tx}px;--ty:${ty}px;
+          animation:firework ${0.6+Math.random()*0.4}s ${Math.random()*0.1}s ease-out forwards;
+        `;
+        document.body.appendChild(el);
+        setTimeout(()=>el.remove(),1200);
+      }
+    }, oi*180);
+  });
+}
+
+function heartExplosion(){
+  const emojis=['❤️','💜','💖','💗','🌸','✨','💫','🎉','🎊','💝'];
+  for(let i=0;i<18;i++){
+    setTimeout(()=>{
+      const el=document.createElement('div');
+      el.textContent=emojis[Math.floor(Math.random()*emojis.length)];
+      el.style.cssText=`
+        position:fixed;z-index:8500;pointer-events:none;
+        left:${5+Math.random()*90}vw;
+        top:${20+Math.random()*60}vh;
+        font-size:${1.5+Math.random()*2.5}rem;
+        animation:bigHeart ${0.8+Math.random()*0.6}s ease-out forwards;
+      `;
+      document.body.appendChild(el);
+      setTimeout(()=>el.remove(),1600);
+    }, i*60);
+  }
+}
+
+function ringSurpriseBtn(){
+  const btn=document.getElementById('surpriseBtn');
+  btn.style.animation='ringPulse 0.6s ease-in-out 3';
+  setTimeout(()=>{ btn.style.animation='pulse 2s ease-in-out infinite'; },1800);
 }
