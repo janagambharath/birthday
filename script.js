@@ -227,7 +227,7 @@ function initAudio(){
   const audio = document.getElementById('bgMusic');
   const btn = document.getElementById('audioBtn');
   let playing = false;
-  audio.volume = 0.25;
+  audio.volume = 1.0;
   
   // gentle autoplay attempt
   audio.play().then(()=>{ playing=true; btn.textContent='🎵'; }).catch(()=>{ playing=false; });
